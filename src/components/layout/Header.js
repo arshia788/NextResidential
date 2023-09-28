@@ -1,9 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import styles from '@/components/layout/Header.module.css';
 
 import { FiLogIn } from 'react-icons/fi';
+import { useSession } from 'next-auth/react';
 
 export default function Header() {
+
+    const { data } = useSession();
+
     return (
         <header className={styles.header}>
 
@@ -25,10 +31,16 @@ export default function Header() {
             </div>
 
             <div className={styles.login}>
-                <Link href={'/signin'}>
-                    <FiLogIn />
-                    <span>ورود</span>
-                </Link>
+                {
+                    data
+                        ?
+                        <p>Logged</p>
+                    :
+                        <Link href={'/signin'}>
+                            <FiLogIn />
+                            <span>ورود</span>
+                        </Link>
+                }
             </div>
 
 
